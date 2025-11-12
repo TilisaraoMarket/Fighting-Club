@@ -1,0 +1,585 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>Fighting Club - Taekwondo y artes marciales</title>  
+  <meta name="description" content="Fighting Club - Academia de Taekwondo y artes marciales en Tilisarao. Clases para niños y adultos, entrenamiento personalizado y espíritu de comunidad.">
+  <!-- Favicon: usar logo.jpg si está disponible -->
+  <link rel="icon" href="logo.jpg" type="image/jpeg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@700&display=swap" rel="stylesheet">  
+  <style>  
+    :root{  
+      --bg: #0b0f14;  
+      --surface: #141b22;  
+      --card: #1e252c;  
+      --text: #e9f0f5;  
+      --muted: #a9b7c4;  
+      --primary: #4ade80;  
+      --accent: #22d3ee;  
+      --shadow: 0 10px 25px rgba(0,0,0,.25);  
+    }  
+
+    * { box-sizing: border-box; }  
+    html, body { margin: 0; padding: 0; background: radial-gradient(circle at 10% -10%, rgba(74,222,128,.15), transparent 40%), radial-gradient(circle at 90% 0%, rgba(59,130,246,.15), transparent 40%), var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }  
+
+    header {  
+      position: sticky; top: 0; z-index: 100;  
+      background: rgba(20,26,34,.95);  
+      border-bottom: 1px solid rgba(255,255,255,.05);  
+      backdrop-filter: saturate(1.2) blur(6px);  
+    }  
+
+    .nav {  
+      max-width: 1100px; margin: 0 auto; padding: 14px 20px;  
+      display: flex; align-items: center; justify-content: space-between;  
+      gap: 16px;  
+    }  
+
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }  
+    .brand-logo { width: 48px; height: 48px; border-radius: 10px;  
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);  
+      display: inline-flex; align-items: center; justify-content: center;  
+      font-weight: 700; color: #04150f; overflow: hidden; }
+    .brand-logo-img { width:100%; height:100%; object-fit:cover; display:block; }
+    .brand-name { font-family: Montserrat, Inter, sans-serif; font-weight: 700; letter-spacing: .5px; }  
+    .brand-sub { font-size: 12px; color: var(--muted); margin-left: 6px; }  
+
+    nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }  
+    nav a { color: var(--text); text-decoration: none; padding: 8px 12px; border-radius: 8px; transition: all .2s ease; }  
+    nav a:hover { background: rgba(255,255,255,.08); transform: translateY(-1px); }
+    
+    /* Menú hamburguesa */
+    .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 28px; cursor: pointer; padding: 8px; z-index: 1001; transition: all .2s ease; }
+    .hamburger:hover { transform: scale(1.1); }
+    .mobile-menu { 
+      display: none; 
+      position: fixed; 
+      top: 65px; 
+      left: 0; 
+      right: 0; 
+      max-height: calc(100vh - 65px);
+      background: rgba(11,15,20,.99); 
+      flex-direction: column; 
+      padding: 0; 
+      z-index: 999; 
+      overflow-y: auto; 
+      border-top: 1px solid rgba(255,255,255,.08);
+      width: 100%;
+    }
+    .mobile-menu.active { display: flex !important; }
+    .mobile-menu a { display: block; padding: 16px 20px; color: var(--text); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.05); transition: all .2s ease; }
+    .mobile-menu a:hover { background: rgba(255,255,255,.1); color: var(--primary); }
+    
+    /* Multimedia */
+    .multimedia-grid { display: grid; grid-template-columns: 1fr 360px; gap: 18px; align-items: start; }
+    .multimedia-videos { display: flex; flex-direction: column; gap: 18px; }
+    .multimedia-images { display: grid; gap: 12px; }
+    
+    @media (max-width: 768px) {
+      .multimedia-grid { grid-template-columns: 1fr; }
+      .multimedia-videos video { width: 100%; height: auto; }
+      .multimedia-images { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+      .hamburger { display: block; }
+      nav ul { display: none; }
+      .nav { flex-wrap: wrap; gap: 8px; }
+      .cta-btn { padding: 10px 14px; font-size: 13px; white-space: nowrap; }
+      .quick-wa { display: inline-flex !important; align-items: center; padding: 0; }
+      .quick-wa span:last-child { display: none; }
+      .quick-wa .wa-btn { width: 40px; height: 40px; }
+    }
+    
+    @media (max-width: 520px) {
+      .nav { gap: 4px; padding: 8px 12px; }
+      .brand { min-width: auto; }
+      .brand-name { display: none; }
+      .cta-btn { padding: 8px 12px; font-size: 12px; }
+      .brand-logo { width: 40px; height: 40px; }
+    }  
+
+    .cta-btn {  
+      background: linear-gradient(135deg, var(--primary), #6ee7b7);  
+      color: #06281b; padding: 12px 18px; border-radius: 999px;  
+      text-decoration: none; font-weight: 700; box-shadow: 0 6px 16px rgba(74,222,128,.4);  
+    }  
+
+    /* Hero CTAs */
+    .hero-ctas { display:flex; gap:12px; margin-bottom:18px; }
+    .btn.secondary { background: transparent; border: 1px solid rgba(255,255,255,.08); color: var(--text); padding: 12px 16px; border-radius: 999px; font-weight:700; text-decoration:none; }
+    .btn.download { background: var(--accent); border: 1px solid rgba(255,255,255,.08); color: var(--bg); padding: 12px 16px; border-radius: 999px; font-weight:700; text-decoration:none; display: inline-flex; align-items: center; gap: 8px; }
+    .btn.download svg { vertical-align: middle; }
+
+    .hero {  
+      max-width: 1100px; margin: 40px auto; padding: 0 20px;  
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: center;  
+    }  
+    .hero-copy h1 {  
+      font-family: Montserrat, Inter, sans-serif;  
+      font-size: 48px; line-height: 1.04; margin: 0 0 14px;  
+    }  
+    .gradient-text {  
+      background: linear-gradient(90deg, #a3e635 0%, #22d3ee 60%, #a78bfa 100%);  
+      -webkit-background-clip: text; background-clip: text; color: transparent;  
+    }  
+    .hero-copy p { color: var(--muted); font-size: 18px; margin-bottom: 20px; }  
+    .cards {  
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;  
+    }  
+    .card {  
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);  
+      border-radius: 14px; padding: 14px;  
+    }  
+    .card h4 { margin: 0 0 6px; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }  
+    .card p { margin: 0; font-size: 13px; color: #dbe7f5; }  
+
+    .hero-visual {  
+      position: relative; height: 360px; border-radius: 20px; overflow: hidden;  
+      background: linear-gradient(135deg, rgba(2,6,23,.95), rgba(14,23,42,.95));  
+      display: flex; align-items: center; justify-content: center;  
+      box-shadow: var(--shadow);  
+    }
+    .fighter{ animation: float 6s ease-in-out infinite; }
+    @keyframes float{ 0%{ transform: translateY(0) rotate(15deg);}50%{ transform: translateY(-6px) rotate(15deg);}100%{ transform: translateY(0) rotate(15deg);} }
+    .fighter {  
+      width: 260px; height: 260px; border-radius: 50%;  
+      background: conic-gradient(from 180deg at 50% 50%, #0ea5e9, #10b981, #a78bfa, #0ea5e9);  
+      filter: saturate(1.1);  
+      display: inline-flex; align-items: center; justify-content: center;  
+      color: white; font-family: Montserrat, sans-serif; font-weight: 800;  
+      font-size: 48px;  
+      transform: rotate(15deg);  
+    }  
+
+    /* Galería (nueva sección) */  
+    .gallery {  
+      max-width: 1100px; margin: 40px auto; padding: 0 20px;  
+    }  
+    .gallery h2 { font-family: Montserrat, sans-serif; font-size: 28px; margin: 0 0 12px; }  
+    .gallery p { color: var(--muted); margin-top: 0 0 16px; }  
+    .grid {  
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px;  
+    }  
+    .thumb {  
+      position: relative; overflow: hidden; border-radius: 12px;  
+      background: #111; border: 1px solid rgba(255,255,255,.08);  
+      cursor: zoom-in;  
+    }  
+    .thumb img {  
+      width: 100%; height: 180px; object-fit: cover; display: block;  
+      transition: transform .3s ease;  
+    }  
+    .thumb:hover img { transform: scale(1.05); }  
+    .thumb .caption {  
+      position: absolute; bottom: 0; left: 0; right: 0;  
+      background: rgba(0,0,0,.45); color: #fff; font-size: 12px;  
+      padding: 6px 8px; display: flex; justify-content: space-between; align-items: center;  
+      opacity: 0; transform: translateY(10px); transition: all .2s ease;  
+    }  
+    .thumb:hover .caption { opacity: 1; transform: translateY(0); }  
+
+    /* Lightbox */  
+    .lightbox {  
+      position: fixed; inset: 0; background: rgba(0,0,0,.8);  
+      display: none; align-items: center; justify-content: center; padding: 20px;  
+    }  
+    .lightbox.active { display: flex; }  
+    .lightbox-content {  
+      max-width: 90vw; max-height: 80vh;  
+      background: #000; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;  
+    }  
+    .lightbox-content img { width: 100%; height: auto; display: block; }  
+    .lightbox-controls {  
+      display: flex; justify-content: space-between; align-items: center;  
+      padding: 8px 12px; background: rgba(0,0,0,.6); color: #fff;  
+    }  
+    .icon-btn {  
+      background: rgba(255,255,255,.2); border: none; color: #fff;  
+      padding: 8px 12px; border-radius: 6px; cursor: pointer;  
+    }  
+    @media (max-width: 980px) {  
+      .hero { grid-template-columns: 1fr; }  
+      .hero-visual { height: 320px; }  
+    }  
+    @media (max-width: 520px) {  
+      .hero-copy h1 { font-size: 38px; }  
+      .cards { grid-template-columns: 1fr; }
+    }  
+
+    footer {  
+      margin-top: 40px; padding: 20px; text-align: center;  
+      color: var(--muted); font-size: 13px;  
+      border-top: 1px solid rgba(255,255,255,.08);  
+      background: rgba(2,6,23,.8);  
+    }  
+    /* Botón flotante de Google Maps (pin rojo) */
+    .maps-pin {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(180deg,#ef4444,#b91c1c);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(185,28,28,.32);
+      z-index: 1500;
+      text-decoration: none;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .maps-pin:focus { outline: 3px solid rgba(255,255,255,.08); outline-offset: 3px; }
+    .maps-pin:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(185,28,28,.42); }
+    .maps-pin svg { display: block; }
+    @media (max-width:480px){ 
+      .maps-pin { right:12px; bottom:12px; width:48px; height:48px; } 
+    }
+    /* Barra vertical de redes sociales, encima del pin de Maps */
+    .social-bar {
+      position: fixed;
+      right: 18px;
+      bottom: 86px; /* sitúa la barra encima del maps pin (56px height + margen) */
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1510;
+    }
+    .social-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06);
+      color: var(--text); text-decoration: none; transition: transform .12s ease, box-shadow .12s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.25);
+    }
+    .social-btn:hover { transform: translateY(-3px); background: rgba(255,255,255,.06); }
+    .social-btn svg { width:20px; height:20px; display:block; }
+    @media (max-width:480px){ .social-bar{ right:12px; bottom:76px; } .social-btn{ width:40px;height:40px;} }
+  /* Colores por red social */
+  .social-btn.ig { background: radial-gradient(45% 45% at 30% 20%, #fccc63 0%, #fb6a83 35%, #833ab4 70%); }
+  .social-btn.fb { background: linear-gradient(180deg,#1877f2,#0f62d8); }
+  .social-btn.wa { background: linear-gradient(180deg,#25D366,#128C7E); }
+  .social-btn.ig svg, .social-btn.fb svg, .social-btn.wa svg { filter: drop-shadow(0 1px 0 rgba(0,0,0,.2)); }
+
+  /* Botón rápido de WhatsApp en header */
+  .quick-wa { display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--text); }
+  .quick-wa .wa-btn { width:44px;height:44px;border-radius:999px; display:inline-flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#25D366,#128C7E); box-shadow:0 8px 20px rgba(18,140,126,.2); border: none; }
+  .quick-wa .wa-btn svg{ width:20px;height:20px; }
+
+  </style>  
+</head>  
+<body>  
+
+<header>  
+  <div class="nav">  
+    <a href="#" class="brand" aria-label="Fighting Club - inicio">  
+      <span class="brand-logo" aria-hidden="true">
+        <img src="logo.jpg" alt="Logo Fighting Club" class="brand-logo-img">
+      </span>
+      <span>  
+        <span class="brand-name">Fighting Club</span><span class="brand-sub"> Taekwondo y Artes Marciales</span>  
+      </span>  
+    </a>  
+
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+    <nav aria-label="Navegación principal" id="navbar">  
+      <ul>  
+        <li><a href="#inicio">Inicio</a></li>  
+        <li><a href="#programas">Programas</a></li>  
+        <li><a href="#galeria">Galería</a></li>  
+       
+        <li><a href="#acerca">Acerca</a></li>  
+        <li><a href="#contacto">Contacto</a></li>  
+      </ul>  
+    </nav>  
+
+    <a href="contacto.html" class="cta-btn" aria-label="Inscripción">Inscríbete</a>  
+    <!-- Botón rápido WhatsApp (número placeholder, reemplazar por número real) -->
+    <a class="quick-wa" href="https://wa.me/5492664331570" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+      <span class="wa-btn" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.25A9 9 0 1 0 11.75 21L7 22l1.25-4.75A9 9 0 0 0 21 12.25z" fill="#fff"/></svg>
+      </span>
+      <span style="font-size:14px;font-weight:700;color:var(--text);">WhatsApp</span>
+    </a>
+  </div>  
+</header>
+
+<!-- Menú móvil desplegable -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#inicio">Inicio</a>
+  <a href="#programas">Programas</a>
+  <a href="#galeria">Galería</a>
+  <a href="#multimedia">Video y más fotos</a>
+  <a href="#acerca">Acerca</a>
+  <a href="#contacto">Contacto</a>
+</div><main id="inicio" class="hero" aria-label="Sección principal">  
+  <section class="hero-copy" aria-label="Texto principal">  
+    <h1>Bienvenido a <span class="gradient-text">Fighting Club</span></h1>  
+    <p>Una academia de Taekwondo y artes marciales que combina disciplina, técnica y fitness para todas las edades. Entrena con profesionales certificados y forma parte de una comunidad que impulsa tu confianza y bienestar.</p>  
+
+    <div class="hero-ctas">
+      <a href="#contacto" class="cta-btn" aria-label="Reservar clase de prueba">Clase de prueba</a>
+      <a href="#programas" class="btn secondary" aria-label="Ver programas">Ver programas</a>
+      <a href="Fighting Club.apk" class="btn download" aria-label="Descargar la aplicación">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        Descargar App
+      </a>
+    </div>
+
+    <div class="cards" aria-label="Ventajas">  
+      <div class="card">  
+        <h4>Equipo certificado</h4>  
+        <p>Instructor: <strong>Rodrigo Barroso</strong>. Certificaciones internacionales y enfoque personalizado en cada alumno.</p>  
+      </div>  
+      <div class="card">  
+        <h4>Horarios flexibles</h4>  
+        <p>Clases para niños, jóvenes y adultos, con opciones matutinas y vespertinas.</p>  
+      </div>  
+      <div class="card">  
+        <h4>Instalaciones modernas</h4>  
+        <p>Dojo equipado, vestuarios y áreas de entrenamiento seguras.</p>  
+      </div>  
+      <div class="card">  
+        <h4>Resultados reales</h4>  
+        <p>Mejora de resistencia, autodefensa y disciplina en pocas semanas.</p>  
+      </div>  
+    </div>  
+  </section>  
+
+  <section class="hero-visual" aria-label="Visual principal">  
+    <div class="fighter" title="Logo de Fighting Club">
+      <img src="logo.jpg" alt="Logo Fighting Club" style="width:100%;height:100%;object-fit:contain;border-radius:50%;"/>
+    </div>  
+  </section>  
+</main>  
+
+<section id="programas" aria-label="Programas de la academia" style="max-width:1100px;margin:20px auto;padding:0 20px;">  
+  <h2 style="font-family: Montserrat, sans-serif; font-size:28px; margin:16px 0;">Programas</h2>  
+  <p style="color:var(--muted); margin-top:0;">  
+    Ofrecemos Taekwondo y otras artes marciales para todas las edades. Elige el programa que se ajuste a tus objetivos.  
+  </p>  
+  <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">  
+    <div class="card">  
+      <h4>Taekwondo - Infantil</h4>  
+      <p>Disciplina, coordinación y juego educativo para niños de 4 a 9 años.</p>  
+    </div>  
+    <div class="card">  
+      <h4>Taekwondo - Juvenil</h4>  
+      <p>Tases técnicas, formas y combates controlados para adolescentes.</p>  
+    </div>  
+    <div class="card">  
+      <h4>Defensa Personal</h4>  
+      <p>Auto defensa práctica, situacional y control emocional.</p>  
+    </div>  
+    <div class="card">  
+      <h4>Entrenamiento Avanzado</h4>  
+      <p>Desarrollo de resistencia, velocidad y técnica avanzada para adultos.</p>  
+    </div>  
+  </div>  
+</section>  
+
+<!-- Sección multimedia: vídeo del club -->
+<section id="multimedia" style="max-width:1100px;margin:20px auto;padding:0 20px;">  
+  <h2 style="font-family: Montserrat, sans-serif; font-size:28px; margin:8px 0 12px;">Video y más fotos</h2>
+  <p style="color:var(--muted); margin-top:0 0 12px;">Mira un video de nuestras clases y algunas fotos más.</p>
+
+  <div class="multimedia-grid">
+    <div class="multimedia-videos">
+      <video controls width="100%" style="border-radius:12px; background:#000; max-height:500px;" poster="346674030_5950550188396283_3841282930241252063_n.webp">
+        <source src="AQNrTOaxhEUMWlJyKUJ2KwLxNDuKosgmZ4uXibtwETf19uwAiJtqW27dij9-TAz4h-j3GgvKATr3tClStAipCmmv5LKOCYP1RKvcUks (1).mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
+      <video controls width="100%" style="border-radius:12px; background:#000; margin-top: 18px; max-height:500px;" poster="346031279_3351644155098454_6927979601530587771_n.webp">
+        <source src="AQNR8aW1sQ1Q_SdU1NdDmoSX14UhT7A2YxSjmlLS_n4OPRJXGKKu5Rq8RLnr0UgQhhSSZUl4Ba4qNBzCqY0YEAePACa8iGJvF3A.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
+    </div>
+
+    <div class="multimedia-images">
+      <img loading="lazy" src="346674030_5950550188396283_3841282930241252063_n.webp" alt="Foto 5" style="width:100%;border-radius:10px;object-fit:cover;"/>
+      <img loading="lazy" src="356079179_581459277232368_6692194030218383376_n.webp" alt="Foto 6" style="width:100%;border-radius:10px;object-fit:cover;"/>
+      <img loading="lazy" src="364026769_1218997385434683_4467141581823842838_n.webp" alt="Foto 7" style="width:100%;border-radius:10px;object-fit:cover;"/>
+    </div>
+  </div>
+</section>
+
+<section id="galeria" aria-label="Galería de imágenes" class="gallery">  
+  <h2>Galería del club</h2>  
+  <p>Imágenes de nuestras clases, competencias y eventos. ¡Disfruta de un vistazo a la vida en Fighting Club!</p>  
+
+  <div class="grid" id="galeria-grid">  
+    <!-- Ejemplos de miniaturas; reemplaza src por tus imágenes -->  
+    <div class="thumb" tabindex="0" aria-label="Imagen 1">  
+      <img loading="lazy" src="346031279_3351644155098454_6927979601530587771_n.webp" alt="Entrenamiento 1">  
+      <div class="caption">  
+        <span>Clase de Taekwondo</span>  
+        <span>4-20-2025</span>  
+      </div>  
+    </div>  
+
+    <div class="thumb" tabindex="0" aria-label="Imagen 2">  
+      <img loading="lazy" src="346087586_261336359793505_2480928617860580299_n.webp" alt="Competencia interna">  
+      <div class="caption">  
+        <span>Competencia interna</span>  
+        <span>4-20-2025</span>  
+      </div>  
+    </div>  
+
+    <div class="thumb" tabindex="0" aria-label="Imagen 3">  
+      <img loading="lazy" src="346242968_980846770012907_710843804220797606_n.webp" alt="Entrenamiento en pareja">  
+      <div class="caption">  
+        <span>Entrenamiento en pareja</span>  
+        <span>4-20-2025</span>  
+      </div>  
+    </div>  
+
+    <div class="thumb" tabindex="0" aria-label="Imagen 4">  
+      <img loading="lazy" src="346455754_1010192273690031_847425915259792994_n.webp" alt="Clases para niños">  
+      <div class="caption">  
+        <span>Clases para niños</span>  
+        <span>4-20-2025</span>  
+      </div>  
+    </div>  
+
+    <!-- Añade más thumbnails según tu colección -->  
+  </div>  
+</section>  
+
+<!-- Lightbox (para ver imágenes a tamaño completo) -->  
+<div class="lightbox" id="lightbox" aria-hidden="true" aria-label="Vista ampliada de imagen">  
+  <div class="lightbox-content">  
+    <img id="lightbox-img" src="" alt="Imagen ampliada">  
+    <div class="lightbox-controls">  
+      <button class="icon-btn" id="prev-btn" aria-label="Imagen anterior">Anterior</button>  
+      <button class="icon-btn" id="next-btn" aria-label="Siguiente imagen">Siguiente</button>  
+      <button class="icon-btn" id="close-btn" aria-label="Cerrar">Cerrar</button>  
+    </div>  
+  </div>  
+</div>  
+
+<section id="acerca" aria-label="Acerca de Fighting Club" style="max-width:1100px;margin:20px auto;padding:0 20px;">  
+  <h2 style="font-family: Montserrat, sans-serif; font-size:28px; margin:16px 0;">Acerca de nosotros</h2>  
+  <p style="color:var(--muted);">  
+    Fighting Club nace con el propósito de generar una comunidad dedicada al desarrollo físico y mental a través del Taekwondo y otras artes marciales. Bajo la dirección del profesor <strong>Rodrigo Barroso</strong>, nuestro enfoque es inclusivo, técnico y orientado a resultados sostenibles. Contamos con instalaciones modernas y un equipo comprometido con el crecimiento de cada alumno.
+  </p>  
+</section>  
+
+<section id="contacto" aria-label="Contacto" style="max-width:1100px;margin:20px auto;padding:0 20px;">  
+  <h2 style="font-family: Montserrat, sans-serif; font-size:28px; margin:16px 0;">Contacto</h2>  
+  <p style="color:var(--muted);">¿Tienes preguntas o quieres agendar una clase de prueba? Contáctanos:</p>  
+  <!-- Ubicación retirada por solicitud del cliente -->
+  <form action="#" method="post" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">  
+    <input aria-label="Nombre" placeholder="Nombre" required style="padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background: rgba(255,255,255,.04); color:var(--text);"/>  
+    <input aria-label="Teléfono" placeholder="Teléfono" required style="padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background: rgba(255,255,255,.04); color:var(--text);"/>  
+    <input aria-label="Email" placeholder="Email" type="email" required style="grid-column:1/3; padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background: rgba(255,255,255,.04); color:var(--text);"/>  
+    <textarea aria-label="Mensaje" placeholder="Mensaje" rows="4" style="grid-column:1/3; padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background: rgba(255,255,255,.04); color:var(--text);"></textarea>  
+    <button type="submit" class="cta-btn" style="grid-column:1/3; justify-self:start; margin-top:6px;">Enviar</button>  
+  </form>  
+</section>  
+
+<footer aria-label="Pie de página">  
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <div style="text-align:left;color:var(--text);">
+      <strong>Fighting Club</strong><br>
+      Profesor: <strong>Rodrigo Barroso</strong><br>
+      Tilisarao<br>
+      <a href="https://wa.me/5492664331570" target="_blank" rel="noopener noreferrer" style="color:var(--primary);text-decoration:none;">WhatsApp: +54 9 2664 331570</a>
+    </div>
+    
+  </div>
+  <div style="margin-top:12px;color:var(--muted);">© 2025 Fighting Club. Taekwondo y Artes Marciales. Todos los derechos reservados.</div>
+</footer>  
+
+<script>  
+  // Menú hamburguesa
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = mobileMenu.querySelectorAll('a');
+  
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    hamburger.setAttribute('aria-expanded', mobileMenu.classList.contains('active'));
+  });
+  
+  // Cerrar menú al hacer clic en un enlace
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', false);
+    });
+  });
+  
+  // Cerrar menú al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.mobile-menu') && !e.target.closest('.hamburger')) {
+      mobileMenu.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', false);
+    }
+  });
+
+  // Lightbox básico  
+  (function(){  
+    const grid = document.getElementById('galeria-grid');  
+    const lightbox = document.getElementById('lightbox');  
+    const lightboxImg = document.getElementById('lightbox-img');  
+    const closeBtn = document.getElementById('close-btn');  
+    const prevBtn = document.getElementById('prev-btn');  
+    const nextBtn = document.getElementById('next-btn');
+    // Implementación mínima del lightbox para evitar errores si el script quedó truncado
+    const thumbs = Array.from(grid.querySelectorAll('.thumb'));
+    let currentIndex = 0;
+    function openAt(i){
+      const img = thumbs[i] && thumbs[i].querySelector('img');
+      if(!img) return;
+      currentIndex = i;
+      lightboxImg.src = img.src;
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden','false');
+    }
+    grid.addEventListener('click', (e)=>{
+      const t = e.target.closest('.thumb');
+      if(!t) return;
+      const idx = thumbs.indexOf(t);
+      if(idx >= 0) openAt(idx);
+    });
+    closeBtn.addEventListener('click', ()=>{ lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden','true'); });
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden','true'); } });
+    prevBtn.addEventListener('click', ()=>{ if(!thumbs.length) return; currentIndex = (currentIndex-1+thumbs.length)%thumbs.length; lightboxImg.src = thumbs[currentIndex].querySelector('img').src; });
+    nextBtn.addEventListener('click', ()=>{ if(!thumbs.length) return; currentIndex = (currentIndex+1)%thumbs.length; lightboxImg.src = thumbs[currentIndex].querySelector('img').src; });
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden','true'); } });
+  })();
+
+  // Enlace flotante a Google Maps (pin rojo)
+  // (HTML estático añadido al final del documento)
+</script>
+
+<!-- Botón fijo que abre la ubicación en Google Maps (coordenadas exactas) -->
+<a href="https://www.google.com/maps/search/?api=1&query=-32.730179,-65.291549" class="maps-pin" target="_blank" rel="noopener noreferrer" aria-label="Abrir ubicación en Google Maps de Fighting Club (Tilisarao) -32.730179, -65.291549">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#fff"/>
+  </svg>
+</a>
+
+<!-- Barra vertical de redes sociales: Instagram, Facebook, WhatsApp -->
+  <div class="social-bar" aria-hidden="false" aria-label="Enlaces a redes sociales">
+  <a class="social-btn ig" href="https://www.instagram.com/rodrigo_barroso19?igsh=MWUwejdicmk1czdqeg==" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram de Rodrigo Barroso">
+    <!-- Instagram icon (simplificado) -->
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18.5" cy="5.5" r=".6" fill="#fff"/></svg>
+  </a>
+
+  <a class="social-btn fb" href="https://www.facebook.com/rodrigo.barroso.5855?locale=es_LA" target="_blank" rel="noopener noreferrer" aria-label="Abrir Facebook de Rodrigo Barroso">
+    <!-- Facebook icon (simplificado) -->
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 2h-3a4 4 0 0 0-4 4v2H8v3h3v7h3v-7h2.5l.5-3H14V6a1 1 0 0 1 1-1h3V2z" fill="#fff"/></svg>
+  </a>
+
+  <a class="social-btn wa" href="https://wa.me/5492664331570" target="_blank" rel="noopener noreferrer" aria-label="Enviar mensaje por WhatsApp">
+    <!-- WhatsApp icon (simplificado) -->
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.25A9 9 0 1 0 11.75 21L7 22l1.25-4.75A9 9 0 0 0 21 12.25z" fill="#fff"/><path d="M17.2 14.1c-.3-.15-1.75-.86-2-.96-.3-.11-.5-.15-.7.15-.2.3-.8.96-.98 1.16-.18.2-.36.22-.66.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.74-1.65-2.04-.17-.3-.02-.46.13-.62.13-.13.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2 0-.37-.05-.52-.05-.15-.7-1.68-.95-2.3-.25-.6-.5-.5-.7-.51-.15-.01-.33-.01-.5-.01s-.5.07-.76.36c-.26.29-1 1-1 2.4 0 1.4 1.03 2.75 1.17 2.95.14.2 2.03 3.1 4.92 4.34 2.9 1.24 2.9.83 3.43.78.53-.05 1.72-.7 1.97-1.37.25-.66.25-1.22.18-1.34-.07-.12-.26-.19-.55-.34z" fill="#fff"/></svg>
+  </a>
+</div>
+
+</body>
+</html>
